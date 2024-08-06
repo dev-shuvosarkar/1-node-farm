@@ -1,5 +1,5 @@
 const fs = require("fs");
-const http = require('http');
+const http = require("http");
 
 //..................file system........................
 
@@ -11,8 +11,6 @@ const http = require('http');
 // const txtOut = `the data of (input.txt) is: ${inptuIN} and current time is: ${now.toLocaleTimeString()}`;
 
 // fs.writeFileSync('./txt/output.txt', txtOut);
-
-
 
 // non-blocking -> asyncronous way
 // fs.readFile("./txt/start.txt", "utf-8", (err, data1) => {
@@ -31,13 +29,12 @@ const http = require('http');
 // });
 // console.log("woll read this first!");
 
-
 //........................server..............................
 
 const server = http.createServer((req, res) => {
-  res.end('hello from my server');
-})
+  res.end("hello from my server");
+});
 
-server.listen(2000, '127.0.0.1', () => {
-  console.log('Server is live on port: 2000');
-})
+server.listen(2000, "127.0.0.1", () => {
+  console.log("Server is live on port: 2000");
+});
