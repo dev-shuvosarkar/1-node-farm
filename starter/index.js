@@ -1,9 +1,11 @@
 const fs = require("fs");
 const http = require("http");
+const { CLIENT_RENEG_LIMIT } = require("tls");
+const url = require("url");
 
 //..................file system........................
 
-// // blocking -> syncronus way
+// ********************blocking -> syncronus way*************************
 // const inptuIN = fs.readFileSync("./txt/input.txt", "utf-8");
 // console.log(inptuIN);
 
@@ -12,7 +14,7 @@ const http = require("http");
 
 // fs.writeFileSync('./txt/output.txt', txtOut);
 
-// non-blocking -> asyncronous way
+// ****************non-blocking -> asyncronous way********************
 // fs.readFile("./txt/start.txt", "utf-8", (err, data1) => {
 //   if (err) return console.log("some error occourd!!");
 
@@ -31,8 +33,31 @@ const http = require("http");
 
 //........................server..............................
 
+fs.readFile(`${__dirname}/dev-data/data.json`, "utf-8", (err, data) => {
+  const produceData = JSON.parse(data);
+});
+
 const server = http.createServer((req, res) => {
-  res.end("hello from my server");
+  const urlName = req.url;
+
+  if (urlName === "/" || urlName === "/home") {
+    res.end("this is the #home page.");
+  } else if (urlName === "/about") {
+    res.end("this is the #About page.");
+  } else if (urlName === "/login") {
+    res.end("this is the #Login page.");
+  } else if (urlName === "/api") {
+    fs.readFile(`${__dirname}/dev-data/data.json`, "utf-8", (err, data) => {
+      const produceData = JSON.parse(data);
+      res.writeHead(200, { "content-type": "application/json" });
+      res.end(data);
+    });
+  } else {
+    res.writeHead(404, {
+      "content-type": "text/html",
+    });
+    res.end("<h1>404 not found!</h1>");
+  }
 });
 
 server.listen(2000, "127.0.0.1", () => {
